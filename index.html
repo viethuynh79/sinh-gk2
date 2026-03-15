@@ -25,7 +25,7 @@
             color: var(--text-main);
             overflow-x: hidden;
             min-height: 100vh;
-            padding: 40px 20px;
+            padding: 80px 20px 40px; /* Tăng padding trên để không lẹm vào nút nhạc */
         }
 
         /* --- BACKGROUND MESH LIQUID ANIMATION --- */
@@ -41,6 +41,65 @@
             50% { transform: translate(5%, 10%) scale(1.05); }
             100% { transform: translate(-5%, -5%) scale(0.95); }
         }
+
+        /* --- MUSIC CONTROLLER (iOS STYLE) --- */
+        .music-control {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            padding: 8px 15px;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        .music-control:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.1); transform: translateY(-2px); }
+        .music-label {
+            font-size: 0.9em;
+            font-weight: 600;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        /* Nút gạt iOS */
+        .ios-switch {
+            position: relative;
+            display: inline-block;
+            width: 46px;
+            height: 26px;
+        }
+        .ios-switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #e5e5ea;
+            transition: .4s;
+            border-radius: 26px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        input:checked + .slider { background-color: var(--success); }
+        input:checked + .slider:before { transform: translateX(20px); }
 
         /* --- LIQUID GLASS COMPONENTS --- */
         .container { max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
@@ -71,13 +130,8 @@
         
         /* ĐỊNH DẠNG ẢNH SIÊU ĐẸP & RESPONSIVE */
         .q-img { 
-            max-width: 100%; 
-            height: auto; 
-            border-radius: 16px; 
-            margin-bottom: 20px; 
-            display: block; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
-            border: 1px solid rgba(255,255,255,0.6);
+            max-width: 100%; height: auto; border-radius: 16px; margin-bottom: 20px; display: block; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.6);
         }
 
         /* --- BUTTONS & INPUTS --- */
@@ -117,7 +171,9 @@
 
         /* --- MOBILE RESPONSIVE --- */
         @media screen and (max-width: 768px) {
-            body { padding: 15px 10px; }
+            body { padding: 70px 10px 15px; } /* Tránh lẹm nút nhạc */
+            .music-control { top: 10px; right: 10px; padding: 6px 12px; }
+            .music-label { font-size: 0.8em; }
             h1 { font-size: 1.8em; margin-bottom: 25px; letter-spacing: -0.5px; }
             h2 { font-size: 1.1em; padding: 12px 15px; margin: 30px 0 15px; border-radius: 12px; }
             .glass-card { padding: 20px 15px; margin-bottom: 20px; border-radius: 18px; }
@@ -142,6 +198,18 @@
 </head>
 <body>
 
+<audio id="bgMusic" loop>
+    <source src="3strikes.mp3" type="audio/mpeg">
+</audio>
+
+<div class="music-control">
+    <span class="music-label">🎧 3 Strikes</span>
+    <label class="ios-switch">
+        <input type="checkbox" id="musicToggle">
+        <span class="slider"></span>
+    </label>
+</div>
+
 <div class="blob-container">
     <div class="blob blob1"></div>
     <div class="blob blob2"></div>
@@ -163,6 +231,25 @@
 </div>
 
 <script>
+// ==================== ĐIỀU KHIỂN NHẠC ====================
+const musicToggle = document.getElementById('musicToggle');
+const bgMusic = document.getElementById('bgMusic');
+
+// Đặt mức âm lượng mặc định vừa phải cho dễ học (40%)
+bgMusic.volume = 0.4;
+
+musicToggle.addEventListener('change', function() {
+    if(this.checked) {
+        bgMusic.play().catch(error => {
+            console.log("Trình duyệt chặn tự động phát âm thanh:", error);
+            this.checked = false;
+            alert("Trình duyệt đang chặn âm thanh. Vui lòng thử chạm vào màn hình rồi bật lại nhé!");
+        });
+    } else {
+        bgMusic.pause();
+    }
+});
+
 // ==================== DỮ LIỆU PHẦN 1 ====================
 const part1Data = [
     { q: "Câu 1. Bằng chứng tiến hóa trực tiếp?", opts: ["A. Cơ quan tương tự.", "B. Cơ quan thoái hóa.", "C. Hóa thạch xương khủng long.", "D. Cơ quan tương đồng."], ans: 2, exp: "Hóa thạch là bằng chứng trực tiếp." },
