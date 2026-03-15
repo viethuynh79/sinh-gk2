@@ -60,7 +60,6 @@
             animation: fadeInUp 0.6s ease-out both;
         }
         
-        /* Hiệu ứng hover chỉ áp dụng trên máy tính (thiết bị có chuột) */
         @media (hover: hover) {
             .glass-card:hover { transform: translateY(-5px) scale(1.01); }
             .opt-btn:hover:not(:disabled) { background: rgba(255, 255, 255, 0.9); transform: translateX(5px); box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
@@ -68,7 +67,8 @@
             .sa-submit:hover:not(:disabled) { background: #005bb5; transform: scale(1.05); }
         }
 
-        .q-text { font-size: 1.15em; font-weight: 600; margin-bottom: 20px; line-height: 1.5; }
+        .q-text { font-size: 1.15em; font-weight: 600; margin-bottom: 20px; line-height: 1.6; }
+        .q-subtext { font-weight: 400; font-size: 0.95em; color: #333; margin-top: 10px; line-height: 1.6;}
 
         /* --- BUTTONS & INPUTS --- */
         .opt-btn { 
@@ -83,7 +83,7 @@
         .tf-actions { display: flex; gap: 10px; }
         .tf-btn { padding: 10px 20px; border: 1px solid rgba(255,255,255,0.8); border-radius: 12px; cursor: pointer; font-weight: 600; background: rgba(255, 255, 255, 0.6); transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.03);}
 
-        .sa-wrap { display: flex; gap: 15px; }
+        .sa-wrap { display: flex; gap: 15px; margin-top: 20px;}
         .sa-input { flex: 1; padding: 15px 20px; border: 1px solid rgba(255,255,255,0.8); border-radius: 14px; background: rgba(255, 255, 255, 0.6); font-size: 1.05em; outline: none; transition: 0.3s; box-shadow: inset 0 2px 5px rgba(0,0,0,0.02);}
         .sa-input:focus { background: #fff; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.2); }
         .sa-submit { padding: 15px 30px; background: var(--accent); color: #fff; border: none; border-radius: 14px; cursor: pointer; font-weight: 600; font-size: 1.05em; transition: 0.3s; box-shadow: 0 4px 15px rgba(0, 122, 255, 0.3);}
@@ -105,33 +105,22 @@
         @keyframes shake { 0%, 100% { transform: translateX(0); } 20% { transform: translateX(-8px); } 40% { transform: translateX(8px); } 60% { transform: translateX(-4px); } 80% { transform: translateX(4px); } }
         @keyframes slideDown { to { opacity: 1; transform: translateY(0); } }
 
-        /* ========================================= */
-        /* --- MOBILE RESPONSIVE (SMARTPHONES) --- */
-        /* ========================================= */
+        /* --- MOBILE RESPONSIVE --- */
         @media screen and (max-width: 768px) {
             body { padding: 15px 10px; }
             h1 { font-size: 1.8em; margin-bottom: 25px; letter-spacing: -0.5px; }
             h2 { font-size: 1.1em; padding: 12px 15px; margin: 30px 0 15px; border-radius: 12px; }
-            
             .glass-card { padding: 20px 15px; margin-bottom: 20px; border-radius: 18px; }
             .q-text { font-size: 1.05em; margin-bottom: 15px; }
-            
             .opt-btn { padding: 14px 15px; font-size: 0.95em; border-radius: 12px; margin-bottom: 10px; }
-            
-            /* Giao diện Đúng/Sai xếp dọc trên điện thoại */
             .tf-row { flex-direction: column; align-items: flex-start; gap: 12px; padding-bottom: 15px; }
             .tf-text { padding-right: 0; width: 100%; }
             .tf-actions { width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
             .tf-btn { padding: 12px; font-size: 0.95em; border-radius: 10px; width: 100%; }
-            
-            /* Giao diện Điền khuyết xếp dọc trên điện thoại */
             .sa-wrap { flex-direction: column; gap: 10px; }
             .sa-input { padding: 14px; font-size: 1em; border-radius: 12px; width: 100%; }
             .sa-submit { padding: 14px; font-size: 1em; border-radius: 12px; width: 100%; }
-            
             .explanation { padding: 15px; font-size: 0.9em; margin-top: 15px; }
-            
-            /* Chỉnh lại độ tụ sáng của blobs trên mobile */
             .blob { filter: blur(50px); }
             .blob1 { width: 80vw; height: 80vw; }
             .blob2 { width: 70vw; height: 70vw; }
@@ -163,8 +152,7 @@
 </div>
 
 <script>
-// ==================== DỮ LIỆU FULL ĐỀ CƯƠNG ====================
-
+// ==================== DỮ LIỆU PHẦN 1 ====================
 const part1Data = [
     { q: "Câu 1. Bằng chứng tiến hóa trực tiếp?", opts: ["A. Cơ quan tương tự.", "B. Cơ quan thoái hóa.", "C. Hóa thạch xương khủng long.", "D. Cơ quan tương đồng."], ans: 2, exp: "Hóa thạch là bằng chứng trực tiếp." },
     { q: "Câu 2. Xương chi trước sư tử biển, cá sấu, mèo tương đồng. Đây là bằng chứng?", opts: ["A. Sinh học phân tử.", "B. Giải phẫu so sánh.", "C. Tế bào học.", "D. Hóa thạch."], ans: 1, exp: "Nghiên cứu cấu tạo các cơ quan là Giải phẫu so sánh." },
@@ -217,31 +205,128 @@ const part1Data = [
     { q: "Câu 49. Hiện nay đại phân tử hữu cơ có tiến hóa thành tế bào sơ khai không?", opts: ["A. Không, vì không đủ phân tử hữu cơ.", "B. Không, vì chất hữu cơ sẽ bị vi sinh vật phân hủy hoặc bị ôxi hóa.", "C. Không, vì thiếu năng lượng.", "D. Không, vì thiếu chất vô cơ."], ans: 1, exp: "Khí quyển hiện nay có nhiều Oxy tự do và vi sinh vật, chúng sẽ phân hủy ngay lập tức các chất hữu cơ mới tạo thành." }
 ];
 
+// ==================== DỮ LIỆU PHẦN 2 ====================
 const part2Data = [
-    { q: "Câu 1. Bằng chứng tiến hóa:", stmts: [{ t: "a) Cơ quan thực hiện chức năng khác nhau, chung nguồn gốc là tương đồng.", a: true, e: "Đúng định nghĩa cơ quan tương đồng." }, { t: "b) Cơ quan thoái hóa phản ánh tiến hóa đồng quy.", a: false, e: "Sai. Thoái hóa phản ánh tiến hóa phân li." }, { t: "c) Họ hàng càng gần thì trình tự amino acid càng khác xa nhau.", a: false, e: "Sai. Họ hàng càng gần thì trình tự càng GIỐNG nhau." }, { t: "d) Vi khuẩn, động thực vật đều cấu tạo từ tế bào.", a: true, e: "Đúng. Đây là bằng chứng tế bào học." }] },
-    { q: "Câu 2. Bằng chứng hóa thạch:", stmts: [{ t: "a) Hóa thạch là di tích sinh vật sống để lại trong lớp địa chất.", a: true, e: "Đúng định nghĩa." }, { t: "b) Xác sâu bọ trong hổ phách, voi mamut trong băng là hóa thạch.", a: true, e: "Đúng, đây là các dạng hóa thạch nguyên vẹn." }, { t: "c) Hóa thạch là bằng chứng gián tiếp.", a: false, e: "Sai. Hóa thạch là bằng chứng TRỰC TIẾP." }, { t: "d) Hầu hết hóa thạch giữ nguyên hình dạng, màu sắc.", a: false, e: "Sai. Rất hiếm khi giữ nguyên màu sắc." }] },
-    { q: "Câu 3. Học thuyết Darwin:", stmts: [{ t: "a) Darwin đề xuất thuyết tiến hóa bằng CLTN.", a: true, e: "Đúng." }, { t: "b) Biến dị cá thể là sai khác giữa các cá thể trong loài qua sinh sản.", a: true, e: "Đúng định nghĩa của Darwin." }, { t: "c) Khởi hành năm 1832.", a: false, e: "Sai. Tàu Beagle khởi hành năm 1831." }, { t: "d) Nguyên liệu chủ yếu là đột biến cấu trúc NST.", a: false, e: "Sai. Thời Darwin chưa có khái niệm NST." }] },
-    { q: "Câu 4. Biến dị cá thể theo Darwin:", stmts: [{ t: "a) Xuất hiện ngẫu nhiên trong sinh sản.", a: true, e: "Đúng." }, { t: "b) Xuất hiện đồng loạt theo một hướng xác định.", a: false, e: "Sai. Đây là đặc điểm của biến dị xác định." }, { t: "c) Không di truyền được.", a: false, e: "Sai. Biến dị cá thể là di truyền được." }, { t: "d) Không xác định được chiều hướng.", a: true, e: "Đúng. Mang tính chất cá biệt, ngẫu nhiên." }] },
-    { q: "Câu 5. Hình thành loài mới:", stmts: [{ t: "a) Cùng khu vực, khác ổ sinh thái lâu dần dẫn đến cách li sinh sản.", a: true, e: "Đúng. (Cách li sinh thái)." }, { t: "b) Quần thể thích nghi luôn dẫn đến hình thành loài mới.", a: false, e: "Sai. Hình thành quần thể thích nghi chưa chắc thành loài mới." }, { t: "c) Lai xa kèm đa bội hóa góp phần hình thành loài mới cùng khu vực địa lí.", a: true, e: "Đúng. Xảy ra chủ yếu ở thực vật." }, { t: "d) Cách li tập tính, sinh thái có thể dẫn đến loài mới.", a: true, e: "Đúng." }] },
-    { q: "Câu 6. Chim sẻ trên đảo:", stmts: [{ t: "a) Là ví dụ hình thành loài khác khu (địa lí).", a: true, e: "Đúng, bị bão cuốn ra đảo cách xa đất liền." }, { t: "b) Yếu tố chính không giao phối là do tập tính làm tổ mới.", a: true, e: "Đúng, cách li tập tính đã được hình thành." }, { t: "c) Tái nhập đất liền chúng sẽ không ăn cùng loài thực vật.", a: false, e: "Sai. Không có dữ liệu chắc chắn về thức ăn." }, { t: "d) Tái nhập vẫn không giao phối để sinh con.", a: true, e: "Đúng, vì đã thành 2 loài khác nhau." }] },
-    { q: "Câu 7. Tiến hóa nhỏ:", stmts: [{ t: "a) Kết thúc bằng xuất hiện loài mới (cách li sinh sản).", a: true, e: "Đúng định nghĩa." }, { t: "b) Đơn vị tiến hóa là cá thể.", a: false, e: "Sai. Đơn vị của tiến hóa nhỏ là quần thể." }, { t: "c) Là quá trình hình thành loài mới.", a: true, e: "Đúng bản chất." }, { t: "d) Diễn ra không gian rộng, thời gian dài, không thể làm thực nghiệm.", a: false, e: "Sai. Không gian hẹp, thời gian ngắn, CÓ THỂ làm thực nghiệm." }] },
-    { q: "Câu 8. Chọn lọc tự nhiên:", stmts: [{ t: "a) Phân hóa sống sót & sinh sản của các cá thể với kiểu gen khác nhau.", a: true, e: "Đúng theo tiến hóa tổng hợp hiện đại." }, { t: "b) Tác động trực tiếp lên kiểu gen.", a: false, e: "Sai. Tác động trực tiếp lên Kiểu Hình, gián tiếp lên Kiểu Gen." }, { t: "c) Làm biến đổi không theo hướng xác định.", a: false, e: "Sai. CLTN là nhân tố DUY NHẤT có hướng." }, { t: "d) Đóng vai trò sàng lọc mà không tạo ra kiểu gen thích nghi.", a: true, e: "Đúng, đột biến và giao phối mới tạo kiểu gen." }] },
-    { q: "Câu 9. Sự sống trên Trái Đất:", stmts: [{ t: "a) Tiến hóa hóa học -> tiền sinh học -> sinh học.", a: true, e: "Đúng." }, { t: "b) Khí quyển nguyên thủy chưa có khí Oxygen.", a: true, e: "Đúng. Đó là môi trường khử." }, { t: "c) Quá trình thủy phân tạo đại phân tử.", a: false, e: "Sai. Phải là quá trình trùng hợp (polymer hóa)." }, { t: "d) Mầm mống xuất hiện ngay khi Trái đất hình thành.", a: false, e: "Sai. Phải mất hàng tỉ năm tiến hóa hóa học." }] },
-    { q: "Câu 10. Đại địa chất:", stmts: [{ t: "a) Thực vật có hạt phát sinh ở kỉ Carbon (Than đá).", a: true, e: "Đúng." }, { t: "b) Chim, thú phát sinh ở kỉ Tam Điệp của Đại Tân sinh.", a: false, e: "Sai. Kỉ Tam điệp (Trias) thuộc Đại Trung Sinh." }, { t: "c) Linh trưởng phát sinh kỉ Đệ tam (Đại Tân sinh).", a: true, e: "Đúng." }, { t: "d) Bò sát cổ ngự trị ở Kỉ Jura.", a: true, e: "Đúng (Công viên kỉ Jura)." }] },
-    { q: "Câu 11. Đặc điểm kỉ Đệ Tứ:", stmts: [{ t: "a) Loài người hiện đại xuất hiện.", a: true, e: "Đúng." }, { t: "b) Thực vật hạt kín xuất hiện, thú tiến hóa.", a: false, e: "Sai. Hạt kín xuất hiện từ kỉ Phấn trắng." }, { t: "c) Phồn thịnh hạt kín, sâu bọ, chim thú.", a: false, e: "Sai. Phồn thịnh ở kỉ Đệ Tam." }, { t: "d) Phân hóa cá xương, phát sinh lưỡng cư.", a: false, e: "Sai. Sự kiện này ở kỉ Devon." }] }
+    { q: "Câu 1. Khi nói về bằng chứng tiến hóa, phát biểu sau đây là đúng hay sai?", stmts: [{ t: "a) Những cơ quan thực hiện các chức năng khác nhau, bắt đầu từ một nguồn gốc chung gọi là cơ quan tương đồng.", a: true, e: "Đúng định nghĩa cơ quan tương đồng." }, { t: "b) Cơ quan thoái hóa phản ánh tiến hóa đồng quy (tiến hóa hội tụ).", a: false, e: "Sai. Thoái hóa phản ánh tiến hóa phân li." }, { t: "c) Nhưng loài có họ hàng càng gần nhau thù trình tự amino acid hay trình tự các nucleotide càng có xu huớng khác xa nhau.", a: false, e: "Sai. Họ hàng càng gần thì trình tự càng GIỐNG nhau." }, { t: "d) Tất cả các vi khuẩn, động vật, thực vật đều đuợc cấu tạo từ tế bào.", a: true, e: "Đúng. Đây là bằng chứng tế bào học." }] },
+    { q: "Câu 2. Khi nói về hóa thạch, các phát biểu sau đây là đúng hay sai?", stmts: [{ t: "a) Hoá thạch là di tích của các sinh vật sống để lại trong các thời đại trước đã để lại trong lớp địa chất của vỏ Trái Đất, xác sinh vật hóa đá hoặc được bảo tồn trong các điều kiện đặc biệt.", a: true, e: "Đúng định nghĩa." }, { t: "b) Xác sâu bọ được phủ kín trong nhựa hổ phách còn giữ nguyên màu sắc và xác của voi mamut còn tươi trong lớp băng hà là hóa thạch.", a: true, e: "Đúng, đây là các dạng hóa thạch nguyên vẹn." }, { t: "c) Hóa thạch cung cấp cho chúng ta những bằng chứng gián tiếp về lịch sử tiến hóa của sinh giới.", a: false, e: "Sai. Hóa thạch là bằng chứng TRỰC TIẾP." }, { t: "d) Đối với các dạng hóa thạch của sinh vật, di tích thu được thường là cơ thể sinh vật giữ nguyên hình dạng, màu sắc.", a: false, e: "Sai. Rất hiếm khi giữ nguyên màu sắc." }] },
+    { q: "Câu 3. Khi nói về học thuyết Darwin. Các kết luận dưới đây là đúng hay sai?", stmts: [{ t: "a) Charles Darwin đã đề xuất lý thuyết tiến hóa bằng chọn lọc tự nhiên trong công trình nghiên cứu về tiến hóa của mình.", a: true, e: "Đúng." }, { t: "b) Darwin quan niệm biến dị cá thể là sự phát sinh những sai khác giữa các cá thể trong loài qua quá trình sinh sản.", a: true, e: "Đúng định nghĩa của Darwin." }, { t: "c) Darwin tham gia chuyến thám hiểm vòng quanh thế giới trên tàu Beagle vào năm 1832.", a: false, e: "Sai. Tàu Beagle khởi hành năm 1831." }, { t: "d) Charles Darwin cho rằng nguồn nguyên liệu chủ yếu của quá trình tiến hóa là đột biến cấu trúc NST.", a: false, e: "Sai. Thời Darwin chưa có khái niệm NST." }] },
+    { q: "Câu 4. Khi nói về loại biến dị cá thể theo quan niệm của Darwin, những phát biểu dưới đây là đúng hay sai?", stmts: [{ t: "a) Xuất hiện ngẫu nhiên trong quá trình sinh sản và phát triển cá thể.", a: true, e: "Đúng." }, { t: "b) Xuất hiện đồng loạt theo một hướng xác định.", a: false, e: "Sai. Đây là đặc điểm của biến dị xác định." }, { t: "c) Không di truyền được qua sinh sản hữu tính.", a: false, e: "Sai. Biến dị cá thể là di truyền được." }, { t: "d) Không xác định được chiều hướng biến dị.", a: true, e: "Đúng. Mang tính chất cá biệt, ngẫu nhiên." }] },
+    { q: "Câu 5. Theo thuyết tiến hóa hiện đại, khi nói về quá trình hình thành loài mới, các phát biểu sau đây đúng hay sai?", stmts: [{ t: "a) Hai quần thể cùng loài sống trong cùng khu vực địa lí nhưng ở hai ổ sinh thái khác nhau thì lâu dần có thể dẫn đến cách li sinh sản và hình thành loài mới.", a: true, e: "Đúng. (Cách li sinh thái)." }, { t: "b) Hình thành loài bằng con đường cách li địa lí thường gắn liền với quá trình hình thành quần thể thích nghi; hình thành quần thể thích nghi luôn dẫn đến hình thành loài mới.", a: false, e: "Sai. Hình thành quần thể thích nghi chưa chắc thành loài mới." }, { t: "c) Lai xa kèm đa bội hóa góp phần hình thành nên loài mới trong cùng một khu vực địa lí vì sự sai khác về NST đã nhanh chóng dẫn đến sự cách li sinh sản.", a: true, e: "Đúng. Xảy ra chủ yếu ở thực vật." }, { t: "d) Cách li tập tính và cách li sinh thái có thể dẫn đến hình thành loài mới.", a: true, e: "Đúng." }] },
+    { q: "Câu 6. Một nhóm cá thể chim sẻ bị một trận bão đưa tới một hòn đảo cách xa đất liền. Đảo này có thành phần loài thực vật khác đất liền, nhóm chim sẻ hình thành quần thể trên đảo có tập tính làm tổ mới... Hãy chỉ ra nhận định đúng, sai:", stmts: [{ t: "a) Đây là ví dụ về sự hình thành loài khác khu.", a: true, e: "Đúng, bị bão cuốn ra đảo cách xa đất liền." }, { t: "b) Yếu tố chính dẫn đến 2 quần thể này không giao phối với nhau nữa là do chúng hình thành tập tính làm tổ mới.", a: true, e: "Đúng, cách li tập tính đã được hình thành." }, { t: "c) Sau khi chim ở đảo tái nhập với chim đất liền trên đất liền thì chúng sẽ không ăn cùng loài thực vật với nhau.", a: false, e: "Sai. Không có dữ liệu chắc chắn về thức ăn." }, { t: "d) Sau một thời gian dài tái nhập cùng nhau chúng vẫn không thể giao phối với nhau để sinh con cái bình thường.", a: true, e: "Đúng, vì đã thành 2 loài khác nhau." }] },
+    { q: "Câu 7. Khi nói về tiến hóa nhỏ, các nhận định sau đây là đúng hay sai?", stmts: [{ t: "a) Tiến hóa nhỏ kết thúc bằng sự hình thành loài mới được đánh dấu bằng sự xuất hiện của cách li sinh sản.", a: true, e: "Đúng định nghĩa." }, { t: "b) Tiến hóa nhỏ xảy ra với từng các cá thể của loài nên đơn vị tiến hóa là loài.", a: false, e: "Sai. Đơn vị của tiến hóa nhỏ là quần thể." }, { t: "c) Là quá trình hình thành loài mới.", a: true, e: "Đúng bản chất." }, { t: "d) Diễn ra trong không gian rộng và thời gian lịch sử dài, không thể tiến hành làm thực nghiệm.", a: false, e: "Sai. Không gian hẹp, thời gian ngắn, CÓ THỂ làm thực nghiệm." }] },
+    { q: "Câu 8. Khi nói về đặc điểm của nhân tố tiến hóa chọn lọc tự nhiên, các nhận định dưới đây là đúng hay sai?", stmts: [{ t: "a) Thực chất là quá trình phân hóa khả năng sống sót và khả năng sinh sản của các cá thể với các kiểu gene khác nhau trong quần thể.", a: true, e: "Đúng theo tiến hóa tổng hợp hiện đại." }, { t: "b) Tác động trực tiếp lên kiểu gene mà không tác động lên kiểu hình của sinh vật.", a: false, e: "Sai. Tác động trực tiếp lên Kiểu Hình, gián tiếp lên Kiểu Gen." }, { t: "c) Làm biến đổi tần số allele và thành phần kiểu gene của quần thể không theo hướng xác định.", a: false, e: "Sai. CLTN là nhân tố DUY NHẤT có hướng." }, { t: "d) Đóng vai trò sàng lọc và giữ lại những cá thể có kiểu gene quy định kiểu hình thích nghi mà không tạo ra các kiểu gene thích nghi.", a: true, e: "Đúng, đột biến và giao phối mới tạo kiểu gen." }] },
+    { q: "Câu 9. Khi nói về quá trình hình thành, phát sinh, phát triển sự sống trên Trái Đất. Các phát biểu sau đây là đúng hay sai?", stmts: [{ t: "a) Quá trình tiến hóa trên trái đất có thể chia làm các giai đoạn: Tiến hóa hóa học  tiến hóa tiền sinh học  tiến hóa sinh học.", a: true, e: "Đúng." }, { t: "b) Trong khí quyển nguyên thủy của Trái đất chưa có khí Oxygen.", a: true, e: "Đúng. Đó là môi trường khử." }, { t: "c) Quá trình thủy phân đã tạo nên các đại phân tử hữu cơ từ các chất hữu cơ đơn giản.", a: false, e: "Sai. Phải là quá trình trùng hợp (polymer hóa)." }, { t: "d) Mầm mống sự sống xuất hiện ngay khi Trái đất hình thành.", a: false, e: "Sai. Phải mất hàng tỉ năm tiến hóa hóa học." }] },
+    { q: "Câu 10. Khi nói về lịch sử phát triển của sinh giới qua các đại địa chất, các phát biểu sau là đúng hay sai?", stmts: [{ t: "a) Thực vật có hạt phát sinh ở kỉ Carboni-ferous của đại Trung Sinh.", a: true, e: "Đúng." }, { t: "b) Chim và thú phát sinh ở kỉ Tam Điệp của Đại tân sinh.", a: false, e: "Sai. Kỉ Tam điệp (Trias) thuộc Đại Trung Sinh." }, { t: "c) Các nhóm linh trưởng phát sinh ở kỉ Đệ tam (thứ 3) của Đại Tân Sinh.", a: true, e: "Đúng." }, { t: "d) Bò sát cổ ngự trị ở Kỉ Jura của đại Trung sinh.", a: true, e: "Đúng (Công viên kỉ Jura)." }] },
+    { q: "Câu 11. Đặc điểm của hệ động - thực vật ở kỉ Đệ Tứ sau là đúng hay sai?", stmts: [{ t: "a) Loài người hiện đại xuất hiện.", a: true, e: "Đúng." }, { t: "b) Thực vật hạt kín xuất hiện, động vật có vú tiến hóa.", a: false, e: "Sai. Hạt kín xuất hiện từ kỉ Phấn trắng." }, { t: "c) Phát triển phồn thịnh của thực vật hạt kín, sâu bọ và chim thú.", a: false, e: "Sai. Phồn thịnh ở kỉ Đệ Tam." }, { t: "d) Phân hóa cá xương, phát sinh lưỡng cư và côn trùng.", a: false, e: "Sai. Sự kiện này ở kỉ Devon." }] }
 ];
 
+// ==================== DỮ LIỆU PHẦN 3 ====================
 const part3Data = [
-    { q: "Câu 1. Có bao nhiêu bằng chứng TRỰC TIẾP trong 6 loại bằng chứng đã cho?", ans: "1", exp: "Chỉ có 1 bằng chứng trực tiếp là (3) Hóa thạch." },
-    { q: "Câu 2. Có bao nhiêu bằng chứng TẾ BÀO HỌC trong 6 ý đã cho?", ans: "4", exp: "Các ý tế bào học: 1, 2, 5, 6. Các ý 3, 4 là sinh học phân tử." },
-    { q: "Câu 3. Darwin quan sát và kết luận bao nhiêu hiện tượng đúng?", ans: "5", exp: "Gồm 1, 3, 4, 5, 6. Ý 2 sai vì con cái luôn có biến dị cá thể khác mẹ." },
-    { q: "Câu 4. Có bao nhiêu quan niệm ĐÚNG (trong 8 ý về học thuyết Darwin)?", ans: "6", exp: "Ý đúng: 1, 3, 4, 6, 7, 8. Ý 2 sai (BD xác định là biến dị đồng loạt). Ý 5 sai." },
-    { q: "Câu 5. Trình tự tiến hóa lông chim sặc sỡ (1-Thu hút, 2-Sẵn đột biến, 3-Nhân allele, 4-Phổ biến). Viết liền:", ans: "2134", exp: "2. Sẵn đột biến -> 1. Thu hút bạn tình -> 3. Phát tán (nhân lên) -> 4. Phổ biến." },
-    { q: "Câu 6. Có bao nhiêu nhân tố tiến hóa trong các nhân tố đã cho?", ans: "5", exp: "Gồm: CLTN, Đột biến, Dòng gen, Giao phối ko ngẫu nhiên, Phiêu bạt DT." },
-    { q: "Câu 7. Có bao nhiêu nhận định ĐÚNG về tiến hóa nhỏ trong 5 ý?", ans: "4", exp: "Các ý 1, 2, 4, 5 đúng. Ý 3 sai vì TH nhỏ kết thúc bằng hình thành loài." },
-    { q: "Câu 8. Đột biến gen gây hại nhưng vẫn có vai trò quan trọng (Bao nhiêu giải thích đúng)?", ans: "3", exp: "Gồm (2), (3), (4). Đột biến lặn là nguồn dự trữ." },
-    { q: "Câu 9. Sinh giới tiến hóa theo bao nhiêu chiều hướng đúng?", ans: "3", exp: "Gồm 1, 2, 4. Ý 3 sai vì chiều hướng là từ DƯỚI NƯỚC LÊN CẠN." },
-    { q: "Câu 10. Có bao nhiêu đặc điểm chỉ ở người hiện đại?", ans: "2", exp: "Chỉ có 1-Văn hóa tôn giáo và 5-Có lồi cằm." }
+    { 
+        q: `Câu 1. Cho các loại bằng chứng sau đây:<br>
+            (1) Bằng chứng giải phẫu so sánh<br>
+            (2) Bằng chứng địa lí sinh học.<br>
+            (3) Bằng chứng hóa thạch<br>
+            (4) Bằng chứng hóa sinh<br>
+            (5) Bằng chứng tế bào<br>
+            (6) Bằng chứng sinh học phân tử.<br>
+            Có bao nhiêu bằng chứng được coi là bằng chứng tiến hóa trực tiếp?`, 
+        ans: "1", 
+        exp: "Chỉ có 1 bằng chứng trực tiếp là (3) Hóa thạch." 
+    },
+    { 
+        q: `Câu 2. Có bao nhiêu bằng chứng tế bào học trong các bằng chứng sau?<br>
+            (1) Mọi cơ thể sống đều được cấu tạo từ tế bào.<br>
+            (2) Quá trình nguyên phân của tế bào thực vật, động vật hoàn toàn giống nhau.<br>
+            (3) Trong mọi tế bào đều tồn tại những đơn phân A, T, G, C<br>
+            (4) Trong mọi tế bào đều tồn tại 20 loại amino acid.<br>
+            (5) Trong mọi cơ thể sống tế bào chỉ được tạo ra từ tế bào trước nó chứ không được hình thành một cách tự nhiên trong giới vô sinh.<br>
+            (6) Trong mọi cơ thể sống tế bào chứa các thông tin cần thiết để điều khiển mọi hoạt động sống.`, 
+        ans: "4", 
+        exp: "Các ý tế bào học: 1, 2, 5, 6. Các ý 3, 4 là sinh học phân tử." 
+    },
+    { 
+        q: `Câu 3. Trong chuyến thám hiểm vòng quanh thế giới trên tàu Beagle và đã quan sát các loài động vật, thực vật, điều kiện tự nhiên và đã thu thập nhiều hóa thạch sinh vật ở những nơi ông đặt chân đến. Qua quan sát ông đã nhận thấy và kết luận bao nhiêu hiện tượng sau đây?<br>
+            (1) Sinh vật có tiềm năng sinh sản lớn<br>
+            (2) Trong quần thể, các cá thể con được sinh ra luôn giống hoàn toàn cá thể mẹ<br>
+            (3) Trong số các biến dị cá thể được hình thành, một số biến dị được di truyền cho thế hệ con<br>
+            (4) Các cá thể trong quần thể, thậm chí các cá thể cùng bố mẹ, mang đặc điểm chung của loài nhưng luôn khác nhau ở một số đặc điểm<br>
+            (5) Khả năng sống sót và sinh sản của cá thể không phải ngẫu nhiên<br>
+            (6) Biến dị cá thể là những sai khác giữa các cá thể cùng loài phát sinh trong đời sống cá thể của sinh vật.`, 
+        ans: "5", 
+        exp: "Gồm 1, 3, 4, 5, 6. Ý 2 sai vì con cái luôn có biến dị cá thể khác mẹ." 
+    },
+    { 
+        q: `Câu 4. Cho những quan niệm học thuyết Darwin:<br>
+            (1) Biến dị cá thể là những sai khác giữa các cá thể cùng loài phát sinh trong đời sống cá thể của sinh vật.<br>
+            (2) Biến dị xác định là biến dị cá thể.<br>
+            (3) Biến dị xác định là mọi cá thể trong cùng một loài đều có những biến đổi giống nhau trước điều kiện ngoại cảnh.<br>
+            (4) Biến dị xác định ít có ý nghĩa trong chọn giống và tiến hóa.<br>
+            (5) Biến dị đồng loạt di truyền được.<br>
+            (6) Biến dị cá thể di truyền được.<br>
+            (7) Biến dị không xác định là nguyên liệu chủ yếu cho qua trình chọn giống và tiến hóa.<br>
+            (8) Đấu tranh sinh tồn là động lực của quá trình tiến hóa.<br>
+            Có bao nhiêu quan niệm đúng?`, 
+        ans: "6", 
+        exp: "Ý đúng: 1, 3, 4, 6, 7, 8. Ý 2 sai (BD xác định là biến dị đồng loạt). Ý 5 sai." 
+    },
+    { 
+        q: `Câu 5. Khi nghiên cứu về tập tính giao phối của loài chim Cicinnurus respublica, người ta thấy chim đực thu hút bạn tình bằng bộ lông nhiều màu và hành động phô diễn. Xét các sự kiện sau:<br>
+            1. Những con đực có màu lông sặc sỡ thu hút được con cái đến giao phối, con cháu của chúng ngày càng đông.<br>
+            2. Trong quần thể sẵn có các đột biến liên quan đến màu sắc của bộ lông.<br>
+            3. Quá trình giao phối làm cho allele đột biến được nhân lên, kiểu hình biến dụ được phát tán trong quần thể.<br>
+            4. Số con đực có màu lông sặc sỡ ngày càng tăng, dần trở nên phổ biến trong quần thể.<br>
+            Hãy viết liền các số tương ứng với bốn sự kiện theo trình tự của quá trình hình thành màu lông sặc sỡ của chim đực.`, 
+        ans: "2134", 
+        exp: "2. Sẵn đột biến -> 1. Thu hút bạn tình -> 3. Phát tán (nhân lên) -> 4. Phổ biến." 
+    },
+    { 
+        q: `Câu 6. Cho các nhân tố sau: chọn lọc tự nhiên, đột biến, dòng gene, nồng độ oxygen, giao phối không ngẫu nhiên, phiêu bạt di truyền, giao phối ngẫu nhiên.<br>
+            Có bao nhiêu nhân tố là nhân tố tiến hóa?`, 
+        ans: "5", 
+        exp: "Gồm: CLTN, Đột biến, Dòng gen, Giao phối ko ngẫu nhiên, Phiêu bạt DT." 
+    },
+    { 
+        q: `Câu 7. Có bao nhiêu nhận định dưới đây là đúng về tiến hóa nhỏ?<br>
+            (1) Tiến hóa nhỏ diễn ra trong phạm vị hẹp, thời gian lịch sử tương đối ngắn.<br>
+            (2) Thực chất của tiến hóa nhỏ là làm thay đổi tần số allele và thành phần kiểu gene của quần thể ban đầu.<br>
+            (3) Kết quả của tiến hóa nhỏ là hình thành nên các đơn vị tiến hóa trên loài.<br>
+            (4) Tiến hóa nhỏ diễn ra trên quy mô quần thể và diễn biến không ngừng dưới tác động của các nhân tố tiến hóa.<br>
+            (5) Chỉ khi nào xuất hiện cách li sinh sản của quần thể mới với quần thể gốc mà nó được sinh ra thì loài mới xuất hiện.`, 
+        ans: "4", 
+        exp: "Các ý 1, 2, 4, 5 đúng. Ý 3 sai vì TH nhỏ kết thúc bằng hình thành loài." 
+    },
+    { 
+        q: `Câu 8. Vì sao đột biến gene thường gây hại cho cơ thể sinh vật nhưng vẫn có vai trò quan trọng trong quá trình tiến hóa?<br>
+            (1) Tần số đột biến gene trong tự nhiên là không đáng kể nên tần số allele đột biến có hại là rất thấp.<br>
+            (2) Gene đột biến có thể có hại trong môi trường này nhưng có thể vô hại hay có lợi trong môi trường khác.<br>
+            (3) Gene đột biến có thể có hại trong tổ hợp gene này nhưng lại vô hại hay có lợi trong các tổ hợp gene khác.<br>
+            (4) Đột biến thường có hại nhưng thường ở trạng thái allele lặn, tồn tại ở dạng dị hợp nên không gây hại.<br>
+            (5) Đột biến trong quần thể là phổ biến, đặc biệt là đột biến gene.<br>
+            Có bao nhiêu giải thích đúng?`, 
+        ans: "3", 
+        exp: "Gồm (2), (3), (4). Đột biến lặn là nguồn dự trữ." 
+    },
+    { 
+        q: `Câu 9. Sinh giới được tiến hóa theo bao nhiêu chiều hướng sau đây?<br>
+            - Ngày càng đa dạng và phong phú.<br>
+            - Tổ chức cơ thể ngày càng cao.<br>
+            - Từ trên cạn xuống dưới nước<br>
+            - Thích nghi ngày càng hợp lý`, 
+        ans: "3", 
+        exp: "Gồm Đa dạng, Tổ chức cao, Thích nghi. Ý 'Từ trên cạn xuống dưới nước' là SAI vì chiều hướng là từ DƯỚI NƯỚC LÊN CẠN." 
+    },
+    { 
+        q: `Câu 10. Có bao nhiêu đặc điểm sau đây chỉ xuất hiện ở người hiện đại Homo sapiens mà không có ở các dạng người tổ tiên?<br>
+            (1) Có đời sống văn hóa và tôn giáo.<br>
+            (2) Biết sử dụng lửa để nấu chín thức ăn.<br>
+            (3) Dáng đứng thẳng.<br>
+            (4) Biết chế tác và sử dụng công cụ lao động.<br>
+            (5) Có lồi cằm.<br>
+            (6) Chi năm ngón.`, 
+        ans: "2", 
+        exp: "Chỉ có 1-Văn hóa tôn giáo và 5-Có lồi cằm." 
+    }
 ];
 
 // ==================== RENDERING ENGINE ====================
