@@ -2,10 +2,10 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Siêu Hệ Thống Ôn Tập Sinh 12 - Liquid Glass</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Siêu Hệ Thống Ôn Tập Sinh 12 - Premium Responsive</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;600;800&family=Inter:wght@400;600;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;600;800&family=Inter:wght@400;500;600;800&display=swap');
         
         :root {
             --glass-bg: rgba(255, 255, 255, 0.45);
@@ -17,7 +17,7 @@
             --accent: #007aff;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
         body { 
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; 
@@ -48,7 +48,7 @@
         h1 { text-align: center; font-weight: 800; font-size: 2.5em; margin-bottom: 40px; background: linear-gradient(135deg, #1d1d1f, #434343); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -1px; }
         
         h2 { 
-            margin: 40px 0 20px; padding: 15px 25px; border-radius: 16px; font-weight: 800;
+            margin: 40px 0 20px; padding: 15px 25px; border-radius: 16px; font-weight: 800; font-size: 1.3em;
             background: var(--glass-bg); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%);
             border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow); color: var(--accent);
         }
@@ -59,7 +59,14 @@
             box-shadow: var(--glass-shadow); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             animation: fadeInUp 0.6s ease-out both;
         }
-        .glass-card:hover { transform: translateY(-5px) scale(1.01); }
+        
+        /* Hiệu ứng hover chỉ áp dụng trên máy tính (thiết bị có chuột) */
+        @media (hover: hover) {
+            .glass-card:hover { transform: translateY(-5px) scale(1.01); }
+            .opt-btn:hover:not(:disabled) { background: rgba(255, 255, 255, 0.9); transform: translateX(5px); box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
+            .tf-btn:hover:not(:disabled) { background: #fff; transform: translateY(-2px); color: var(--accent); }
+            .sa-submit:hover:not(:disabled) { background: #005bb5; transform: scale(1.05); }
+        }
 
         .q-text { font-size: 1.15em; font-weight: 600; margin-bottom: 20px; line-height: 1.5; }
 
@@ -68,21 +75,18 @@
             display: block; width: 100%; text-align: left; padding: 16px 20px; margin-bottom: 12px;
             background: rgba(255, 255, 255, 0.5); border: 1px solid rgba(255,255,255,0.8); border-radius: 14px;
             font-size: 1em; cursor: pointer; font-family: 'Inter', sans-serif; color: var(--text-main);
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); box-shadow: 0 4px 15px rgba(0,0,0,0.03); line-height: 1.4;
         }
-        .opt-btn:hover:not(:disabled) { background: rgba(255, 255, 255, 0.9); transform: translateX(5px); box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
 
         .tf-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid rgba(0,0,0,0.05);}
-        .tf-text { flex: 1; padding-right: 20px; font-size: 1em; font-weight: 500; }
+        .tf-text { flex: 1; padding-right: 20px; font-size: 1em; font-weight: 500; line-height: 1.4;}
         .tf-actions { display: flex; gap: 10px; }
         .tf-btn { padding: 10px 20px; border: 1px solid rgba(255,255,255,0.8); border-radius: 12px; cursor: pointer; font-weight: 600; background: rgba(255, 255, 255, 0.6); transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.03);}
-        .tf-btn:hover:not(:disabled) { background: #fff; transform: translateY(-2px); color: var(--accent); }
 
         .sa-wrap { display: flex; gap: 15px; }
         .sa-input { flex: 1; padding: 15px 20px; border: 1px solid rgba(255,255,255,0.8); border-radius: 14px; background: rgba(255, 255, 255, 0.6); font-size: 1.05em; outline: none; transition: 0.3s; box-shadow: inset 0 2px 5px rgba(0,0,0,0.02);}
         .sa-input:focus { background: #fff; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.2); }
         .sa-submit { padding: 15px 30px; background: var(--accent); color: #fff; border: none; border-radius: 14px; cursor: pointer; font-weight: 600; font-size: 1.05em; transition: 0.3s; box-shadow: 0 4px 15px rgba(0, 122, 255, 0.3);}
-        .sa-submit:hover:not(:disabled) { background: #005bb5; transform: scale(1.05); }
 
         /* --- STATES & ANIMATIONS --- */
         .correct { background: var(--success) !important; color: #fff !important; border-color: var(--success) !important; font-weight: 600; animation: liquidPulse 0.5s ease; box-shadow: 0 8px 20px rgba(52, 199, 89, 0.4) !important;}
@@ -92,7 +96,7 @@
             display: none; margin-top: 20px; padding: 18px 20px; 
             background: rgba(255, 255, 255, 0.7); border-left: 5px solid var(--accent); border-radius: 12px; 
             font-size: 0.95em; animation: slideDown 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-            opacity: 0; transform: translateY(-15px);
+            opacity: 0; transform: translateY(-15px); line-height: 1.5;
         }
         .explanation b { color: var(--accent); font-weight: 800; }
 
@@ -100,6 +104,40 @@
         @keyframes liquidPulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); background: #3fe268; } 100% { transform: scale(1); } }
         @keyframes shake { 0%, 100% { transform: translateX(0); } 20% { transform: translateX(-8px); } 40% { transform: translateX(8px); } 60% { transform: translateX(-4px); } 80% { transform: translateX(4px); } }
         @keyframes slideDown { to { opacity: 1; transform: translateY(0); } }
+
+        /* ========================================= */
+        /* --- MOBILE RESPONSIVE (SMARTPHONES) --- */
+        /* ========================================= */
+        @media screen and (max-width: 768px) {
+            body { padding: 15px 10px; }
+            h1 { font-size: 1.8em; margin-bottom: 25px; letter-spacing: -0.5px; }
+            h2 { font-size: 1.1em; padding: 12px 15px; margin: 30px 0 15px; border-radius: 12px; }
+            
+            .glass-card { padding: 20px 15px; margin-bottom: 20px; border-radius: 18px; }
+            .q-text { font-size: 1.05em; margin-bottom: 15px; }
+            
+            .opt-btn { padding: 14px 15px; font-size: 0.95em; border-radius: 12px; margin-bottom: 10px; }
+            
+            /* Giao diện Đúng/Sai xếp dọc trên điện thoại */
+            .tf-row { flex-direction: column; align-items: flex-start; gap: 12px; padding-bottom: 15px; }
+            .tf-text { padding-right: 0; width: 100%; }
+            .tf-actions { width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+            .tf-btn { padding: 12px; font-size: 0.95em; border-radius: 10px; width: 100%; }
+            
+            /* Giao diện Điền khuyết xếp dọc trên điện thoại */
+            .sa-wrap { flex-direction: column; gap: 10px; }
+            .sa-input { padding: 14px; font-size: 1em; border-radius: 12px; width: 100%; }
+            .sa-submit { padding: 14px; font-size: 1em; border-radius: 12px; width: 100%; }
+            
+            .explanation { padding: 15px; font-size: 0.9em; margin-top: 15px; }
+            
+            /* Chỉnh lại độ tụ sáng của blobs trên mobile */
+            .blob { filter: blur(50px); }
+            .blob1 { width: 80vw; height: 80vw; }
+            .blob2 { width: 70vw; height: 70vw; }
+            .blob3 { width: 75vw; height: 75vw; }
+            .blob4 { width: 60vw; height: 60vw; }
+        }
     </style>
 </head>
 <body>
@@ -112,7 +150,7 @@
 </div>
 
 <div class="container">
-    <h1>HỆ THỐNG ÔN TẬP SINH HỌC 12</h1>
+    <h1>HỆ THỐNG ÔN TẬP SINH 12</h1>
     
     <h2>PHẦN I: TRẮC NGHIỆM NHIỀU LỰA CHỌN (49 Câu)</h2>
     <div id="part1-container"></div>
@@ -212,7 +250,7 @@ const part3Data = [
 const p1Container = document.getElementById('part1-container');
 part1Data.forEach((item, qIndex) => {
     let card = document.createElement('div'); card.className = 'glass-card';
-    card.style.animationDelay = `${qIndex * 0.05}s`;
+    card.style.animationDelay = `${(qIndex % 10) * 0.05}s`;
     let html = `<div class="q-text">${item.q}</div>`;
     item.opts.forEach((opt, oIndex) => {
         html += `<button class="opt-btn" onclick="checkP1(this, ${qIndex}, ${oIndex})">${opt}</button>`;
@@ -282,7 +320,7 @@ part3Data.forEach((item, qIndex) => {
     card.innerHTML = `
         <div class="q-text">${item.q}</div>
         <div class="sa-wrap">
-            <input type="text" class="sa-input" id="input3-${qIndex}" placeholder="Nhập đáp án (VD: 1, 2134...)">
+            <input type="text" class="sa-input" id="input3-${qIndex}" placeholder="Nhập đáp án...">
             <button class="sa-submit" onclick="checkP3(${qIndex}, this)">Kiểm Tra</button>
         </div>
         <div class="explanation" id="exp3-${qIndex}"><b>Giải thích:</b> ${item.exp}</div>
