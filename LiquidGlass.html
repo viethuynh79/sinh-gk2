@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siêu Hệ Thống Ôn Tập Sinh 12 - Liquid Glass</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;600;800&family=Inter:wght@400;600;800&display=swap');
+        
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.45);
+            --glass-border: rgba(255, 255, 255, 0.6);
+            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+            --text-main: #1d1d1f;
+            --success: #34c759;
+            --danger: #ff3b30;
+            --accent: #007aff;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body { 
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; 
+            background-color: #f5f5f7;
+            color: var(--text-main);
+            overflow-x: hidden;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        /* --- BACKGROUND MESH LIQUID ANIMATION --- */
+        .blob-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; overflow: hidden; background: #e0c3fc; }
+        .blob { position: absolute; filter: blur(80px); opacity: 0.8; animation: float 12s infinite cubic-bezier(0.4, 0, 0.2, 1) alternate; }
+        .blob1 { background: #ff9a9e; width: 50vw; height: 50vw; top: -10%; left: -10%; }
+        .blob2 { background: #fecfef; width: 40vw; height: 40vw; bottom: -10%; right: -5%; animation-delay: -3s; }
+        .blob3 { background: #a18cd1; width: 45vw; height: 45vw; top: 30%; left: 40%; animation-delay: -6s; }
+        .blob4 { background: #8fd3f4; width: 35vw; height: 35vw; bottom: 20%; left: 10%; animation-delay: -9s; }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(5%, 10%) scale(1.05); }
+            100% { transform: translate(-5%, -5%) scale(0.95); }
+        }
+
+        /* --- LIQUID GLASS COMPONENTS --- */
+        .container { max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
+        
+        h1 { text-align: center; font-weight: 800; font-size: 2.5em; margin-bottom: 40px; background: linear-gradient(135deg, #1d1d1f, #434343); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -1px; }
+        
+        h2 { 
+            margin: 40px 0 20px; padding: 15px 25px; border-radius: 16px; font-weight: 800;
+            background: var(--glass-bg); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow); color: var(--accent);
+        }
+
+        .glass-card { 
+            background: var(--glass-bg); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--glass-border); border-radius: 24px; padding: 30px; margin-bottom: 25px; 
+            box-shadow: var(--glass-shadow); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: fadeInUp 0.6s ease-out both;
+        }
+        .glass-card:hover { transform: translateY(-5px) scale(1.01); }
+
+        .q-text { font-size: 1.15em; font-weight: 600; margin-bottom: 20px; line-height: 1.5; }
+
+        /* --- BUTTONS & INPUTS --- */
+        .opt-btn { 
+            display: block; width: 100%; text-align: left; padding: 16px 20px; margin-bottom: 12px;
+            background: rgba(255, 255, 255, 0.5); border: 1px solid rgba(255,255,255,0.8); border-radius: 14px;
+            font-size: 1em; cursor: pointer; font-family: 'Inter', sans-serif; color: var(--text-main);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
+        .opt-btn:hover:not(:disabled) { background: rgba(255, 255, 255, 0.9); transform: translateX(5px); box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
+
+        .tf-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid rgba(0,0,0,0.05);}
+        .tf-text { flex: 1; padding-right: 20px; font-size: 1em; font-weight: 500; }
+        .tf-actions { display: flex; gap: 10px; }
+        .tf-btn { padding: 10px 20px; border: 1px solid rgba(255,255,255,0.8); border-radius: 12px; cursor: pointer; font-weight: 600; background: rgba(255, 255, 255, 0.6); transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.03);}
+        .tf-btn:hover:not(:disabled) { background: #fff; transform: translateY(-2px); color: var(--accent); }
+
+        .sa-wrap { display: flex; gap: 15px; }
+        .sa-input { flex: 1; padding: 15px 20px; border: 1px solid rgba(255,255,255,0.8); border-radius: 14px; background: rgba(255, 255, 255, 0.6); font-size: 1.05em; outline: none; transition: 0.3s; box-shadow: inset 0 2px 5px rgba(0,0,0,0.02);}
+        .sa-input:focus { background: #fff; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.2); }
+        .sa-submit { padding: 15px 30px; background: var(--accent); color: #fff; border: none; border-radius: 14px; cursor: pointer; font-weight: 600; font-size: 1.05em; transition: 0.3s; box-shadow: 0 4px 15px rgba(0, 122, 255, 0.3);}
+        .sa-submit:hover:not(:disabled) { background: #005bb5; transform: scale(1.05); }
+
+        /* --- STATES & ANIMATIONS --- */
+        .correct { background: var(--success) !important; color: #fff !important; border-color: var(--success) !important; font-weight: 600; animation: liquidPulse 0.5s ease; box-shadow: 0 8px 20px rgba(52, 199, 89, 0.4) !important;}
+        .incorrect { background: var(--danger) !important; color: #fff !important; border-color: var(--danger) !important; font-weight: 600; animation: shake 0.4s ease; box-shadow: 0 8px 20px rgba(255, 59, 48, 0.4) !important;}
+        
+        .explanation { 
+            display: none; margin-top: 20px; padding: 18px 20px; 
+            background: rgba(255, 255, 255, 0.7); border-left: 5px solid var(--accent); border-radius: 12px; 
+            font-size: 0.95em; animation: slideDown 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            opacity: 0; transform: translateY(-15px);
+        }
+        .explanation b { color: var(--accent); font-weight: 800; }
+
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes liquidPulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); background: #3fe268; } 100% { transform: scale(1); } }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 20% { transform: translateX(-8px); } 40% { transform: translateX(8px); } 60% { transform: translateX(-4px); } 80% { transform: translateX(4px); } }
+        @keyframes slideDown { to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+<div class="blob-container">
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+    <div class="blob blob3"></div>
+    <div class="blob blob4"></div>
+</div>
+
+<div class="container">
+    <h1>HỆ THỐNG ÔN TẬP SINH HỌC 12</h1>
+    
+    <h2>PHẦN I: TRẮC NGHIỆM NHIỀU LỰA CHỌN (49 Câu)</h2>
+    <div id="part1-container"></div>
+
+    <h2>PHẦN II: TRẮC NGHIỆM ĐÚNG / SAI (11 Câu)</h2>
+    <div id="part2-container"></div>
+
+    <h2>PHẦN III: TRẢ LỜI NGẮN (10 Câu)</h2>
+    <div id="part3-container"></div>
+</div>
+
+<script>
+// ==================== DỮ LIỆU FULL ĐỀ CƯƠNG ====================
+
+const part1Data = [
+    { q: "Câu 1. Bằng chứng tiến hóa trực tiếp?", opts: ["A. Cơ quan tương tự.", "B. Cơ quan thoái hóa.", "C. Hóa thạch xương khủng long.", "D. Cơ quan tương đồng."], ans: 2, exp: "Hóa thạch là bằng chứng trực tiếp." },
+    { q: "Câu 2. Xương chi trước sư tử biển, cá sấu, mèo tương đồng. Đây là bằng chứng?", opts: ["A. Sinh học phân tử.", "B. Giải phẫu so sánh.", "C. Tế bào học.", "D. Hóa thạch."], ans: 1, exp: "Nghiên cứu cấu tạo các cơ quan là Giải phẫu so sánh." },
+    { q: "Câu 3. Bằng chứng tiến hóa nào là tế bào học?", opts: ["A. Tất cả cơ thể sinh vật đều cấu tạo từ tế bào.", "B. Gai xương rồng, tua cuốn là biến dạng của lá.", "C. DNA cấu tạo từ 4 loại nucleotide.", "D. Sử dụng chung bộ mã di truyền."], ans: 0, exp: "Ý C, D là sinh học phân tử. Ý A là bằng chứng tế bào học." },
+    { q: "Câu 4. Trình tự nucleotide gene giống nhau. Đây là bằng chứng:", opts: ["A. sinh học phân tử.", "B. tế bào học.", "C. giải phẫu so sánh.", "D. hóa thạch."], ans: 0, exp: "Nghiên cứu ở mức độ DNA, gene là sinh học phân tử." },
+    { q: "Câu 5. Có bao nhiêu ví dụ là cơ quan thoái hóa? (1) Răng khôn, (2) Manh tràng thú ăn thịt, (3) Túi bụng Kangaroo, (4) Chi sau thú biển.", opts: ["A. 1", "B. 2", "C. 3", "D. 4"], ans: 2, exp: "Gồm (1), (2), (4). Túi bụng kangaroo là cơ quan đang phát triển bình thường." },
+    { q: "Câu 6. Trình tự gần gũi với người nhất (dựa vào nucleotide):", opts: ["A. Người -> Tinh tinh -> Đười ươi -> Gorilla.", "B. Người -> Đười ươi -> Tinh tinh -> Gorilla.", "C. Người -> Gorilla -> Tinh tinh -> Đười ươi.", "D. Người -> Tinh tinh -> Gorilla -> Đười ươi."], ans: 3, exp: "Sai khác so với người: Tinh tinh (1), Gorilla (2), Đười ươi (3)." },
+    { q: "Câu 7. Bằng chứng trực tiếp?", opts: ["A. Bộ xương người Việt Cổ.", "B. Amino acid chuỗi β-hemoglobin.", "C. Sinh vật cấu tạo từ tế bào.", "D. Chi trước của mèo và cánh dơi."], ans: 0, exp: "Bộ xương (hóa thạch) là bằng chứng trực tiếp." },
+    { q: "Câu 8. Bằng chứng KHÔNG trực tiếp?", opts: ["A. Di tích xương đai hông cá voi.", "B. Xác voi ma mút trong băng.", "C. Đốt xương khủng long.", "D. Xác sâu bọ trong hổ phách."], ans: 0, exp: "Di tích xương cá voi hiện nay là cơ quan thoái hóa (gián tiếp)." },
+    { q: "Câu 9. Họ hàng loài A với B(92%), C(88%), D(94%), E(96%):", opts: ["A. A -> B -> C -> D -> E.", "B. A -> E -> D -> B -> C.", "C. A -> D -> E -> C -> B.", "D. A -> B -> C -> E -> D."], ans: 1, exp: "Tỉ lệ phần trăm càng cao thì quan hệ càng gần (E > D > B > C)." },
+    { q: "Câu 10. Tại sao cơ quan thoái hóa không bị đào thải?", opts: ["A. Không gây hại, thời gian chưa đủ dài.", "B. Không chức năng nên không ảnh hưởng.", "C. Loại bỏ sẽ ảnh hưởng cơ quan khác.", "D. Là cơ quan khác nguồn gốc."], ans: 0, exp: "CLTN chỉ đào thải tính trạng có hại. Do không gây hại và thời gian chưa đủ dài." },
+    { q: "Câu 11. Các bước Darwin xây dựng học thuyết:", opts: ["A. Quan sát -> giả thuyết -> kiểm chứng -> học thuyết.", "B. Quan sát -> học thuyết -> giả thuyết -> kiểm chứng.", "C. Giả thuyết -> kiểm chứng -> học thuyết -> quan sát.", "D. Học thuyết -> quan sát -> giả thuyết -> kiểm chứng."], ans: 0, exp: "Tuân theo phương pháp nghiên cứu khoa học chung." },
+    { q: "Câu 12. Nguồn nguyên liệu chủ yếu theo Darwin:", opts: ["A. Đột biến cấu trúc NST.", "B. Biến dị cá thể.", "C. Đột biến gene.", "D. Đột biến số lượng NST."], ans: 1, exp: "Darwin chưa biết về đột biến, ông gọi chung là biến dị cá thể." },
+    { q: "Câu 13. Nhân tố quy định chiều hướng tiến hóa vật nuôi, cây trồng:", opts: ["A. Chọn lọc nhân tạo.", "B. Chọn lọc tự nhiên.", "C. Biến dị cá thể.", "D. Biến dị xác định."], ans: 0, exp: "Vật nuôi, cây trồng do con người định hướng bằng CL Nhân Tạo." },
+    { q: "Câu 14. Đối tượng tác động của CLTN theo Darwin:", opts: ["A. Quần thể.", "B. Hệ sinh thái.", "C. Quần xã.", "D. Cá thể."], ans: 3, exp: "Theo Darwin là cá thể. Theo tiến hóa hiện đại là quần thể." },
+    { q: "Câu 15. Hạn chế chủ yếu của Darwin:", opts: ["A. Chưa giải thích đặc điểm thích nghi.", "B. Chưa đi sâu hình thành loài.", "C. Chưa hiểu rõ nguyên nhân và di truyền biến dị.", "D. Chưa quan niệm đúng về đấu tranh sinh tồn."], ans: 2, exp: "Thời đó chưa có kiến thức về di truyền học (DNA, gene)." },
+    { q: "Câu 16. Bản chất CLTN theo Darwin:", opts: ["A. Phân hóa sống sót & sinh sản cá thể kiểu gen khác nhau.", "B. Phân hóa sống sót các cá thể.", "C. Phân hóa khả năng sống sót và sinh sản của cá thể.", "D. Khả năng sống sót kiểu gen khác nhau."], ans: 2, exp: "Darwin chưa biết 'kiểu gen', nên loại các đáp án có chữ này." },
+    { q: "Câu 17. Nguyên nhân tiến hóa theo Darwin:", opts: ["A. Môi trường thay đổi từ từ, sinh vật tự vươn lên.", "B. Tác động của CLTN qua tính biến dị và di truyền.", "C. Tích lũy biến dị có lợi, đào thải biến dị có hại.", "D. Di truyền tập tính phát sinh."], ans: 1, exp: "Lamarck mới là tập tính vươn lên. Darwin nhấn mạnh CLTN tác động lên biến dị & di truyền." },
+    { q: "Câu 18. Biến dị cá thể di truyền qua quá trình nào?", opts: ["A. Tương tác môi trường.", "B. Sinh sản.", "C. CLTN.", "D. CLNT."], ans: 1, exp: "Sinh sản là con đường truyền đạt vật chất di truyền." },
+    { q: "Câu 19. Tác động của CLTN là:", opts: ["A. Tích lũy đặc tính thu được dưới ngoại cảnh.", "B. Tích lũy biến dị có lợi, đào thải có hại cho bản thân sinh vật.", "C. Tích lũy có lợi cho con người.", "D. Đào thải kiểu gen kém thích nghi."], ans: 1, exp: "Ý C là CLNT. Ý D là tiến hóa hiện đại (nhắc đến kiểu gen)." },
+    { q: "Câu 20. Sâu có màu xanh như lá hình thành do:", opts: ["A. CLTN tích lũy biến dị cá thể màu xanh qua nhiều thế hệ.", "B. Thức ăn lá xanh làm biến đổi.", "C. Tự biến màu để thích nghi.", "D. Chim không ăn màu xanh."], ans: 0, exp: "Theo Darwin, CLTN giữ lại những con sâu có biến dị màu xanh (sẵn có) vì chúng khó bị phát hiện." },
+    { q: "Câu 21. Điều quan trọng nhất làm vật nuôi phân li tính trạng:", opts: ["A. Khai thác đặc điểm có lợi.", "B. Loại bỏ trung gian.", "C. Trong mỗi loài, quá trình CLNT tiến hành theo những hướng khác nhau.", "D. CLNT theo một hướng xác định."], ans: 2, exp: "Nhu cầu con người rất đa dạng (người thích gà lấy thịt, người thích lấy trứng) nên phân li theo nhiều hướng." },
+    { q: "Câu 22. Tiến hóa nhỏ là quá trình:", opts: ["A. Hình thành nhóm phân loại trên loài.", "B. Duy trì ổn định kiểu gen.", "C. Biến đổi tần số allele và thành phần kiểu gen.", "D. Củng cố allele trung tính."], ans: 2, exp: "Định nghĩa cốt lõi của Tiến hóa nhỏ." },
+    { q: "Câu 23. Nhân tố ít ảnh hưởng nhất đến cân bằng Hardy-Weinberg?", opts: ["A. Phiêu bạt di truyền.", "B. Dòng gen.", "C. Giao phối không ngẫu nhiên.", "D. Đột biến."], ans: 3, exp: "Tần số đột biến tự nhiên rất thấp (10^-6 - 10^-4) nên thay đổi rất chậm." },
+    { q: "Câu 24. Hạt phấn bay sang quần thể khác là:", opts: ["A. Biến động di truyền.", "B. Dòng gen.", "C. Giao phối không ngẫu nhiên.", "D. Thoái hóa giống."], ans: 1, exp: "Sự phát tán cá thể/giao tử giữa các quần thể là Dòng gen (Di nhập gen)." },
+    { q: "Câu 25. CLTN là nhân tố cơ bản nhất vì:", opts: ["A. Quy định chiều hướng, tốc độ biến đổi kiểu gen.", "B. Làm tăng phân hóa kiểu gen.", "C. Tác động trực tiếp lên kiểu gen.", "D. Làm tăng đa dạng."], ans: 0, exp: "CLTN là nhân tố duy nhất có hướng." },
+    { q: "Câu 26. Allele có lợi vẫn bị loại bỏ do:", opts: ["A. CLTN.", "B. Giao phối không ngẫu nhiên.", "C. Phiêu bạt di truyền.", "D. Giao phối ngẫu nhiên."], ans: 2, exp: "Phiêu bạt di truyền (yếu tố ngẫu nhiên) có thể đào thải vô cớ 1 gen có lợi." },
+    { q: "Câu 27. Người da đỏ Hopi chỉ kết hôn cùng đạo gây bệnh bạch tạng cao do:", opts: ["A. Giao phối không ngẫu nhiên.", "B. Dòng gen.", "C. Phiêu bạt di truyền.", "D. CLTN."], ans: 0, exp: "Kết hôn cùng đạo/họ hàng là giao phối không ngẫu nhiên (nội phối)." },
+    { q: "Câu 28. Hai trường hợp của phiêu bạt di truyền:", opts: ["A. Cổ chai và đột biến.", "B. Cổ chai và sáng lập.", "C. Sáng lập và đột biến.", "D. CLTN và dòng gen."], ans: 1, exp: "Hiệu ứng cổ chai (thảm họa) và hiệu ứng sáng lập (di cư)." },
+    { q: "Câu 29. Ba yếu tố hình thành đặc điểm thích nghi:", opts: ["A. Đột biến, giao phối và CLTN.", "B. Đột biến, CLTN và CLNT.", "C. Chọn lọc, giao phối, phát tán.", "D. Đột biến, phát tán, ngẫu nhiên."], ans: 0, exp: "Đột biến/giao phối tạo nguồn nguyên liệu đa dạng, CLTN sàng lọc." },
+    { q: "Câu 30. Lúa mì (chứa NST 3 loài) hình thành do:", opts: ["A. Lai xa và đa bội hóa.", "B. Cách ly địa lý.", "C. Cách ly sinh thái.", "D. Cách ly cơ học."], ans: 0, exp: "Lai giữa các loài khác nhau tạo con lai, sau đó đa bội hóa để sinh sản được." },
+    { q: "Câu 31. Trình tự tiến hóa nhỏ:", opts: ["A. Phát sinh đột biến -> Phát tán -> Chọn lọc -> Cách li sinh sản.", "B. Đột biến -> Cách li sinh sản -> Phát tán -> Chọn lọc.", "C. Phát tán -> Chọn lọc -> Cách li sinh sản -> Phát tán.", "D. Phát tán -> Chọn lọc -> Đột biến -> Cách li."], ans: 0, exp: "Cách li sinh sản là bước cuối cùng đánh dấu hình thành loài mới." },
+    { q: "Câu 32. Vai trò CLTN theo tiến hóa hiện đại:", opts: ["A. Tạo kiểu gen thích nghi.", "B. Sàng lọc và giữ lại cá thể có kiểu gen thích nghi.", "C. Vừa giữ vừa tạo.", "D. Tạo kiểu gen mà không sàng lọc."], ans: 1, exp: "CLTN chỉ đóng vai trò bộ lọc, Đột biến và Giao phối mới là tác nhân TẠO RA kiểu gen." },
+    { q: "Câu 33. Giống nhau của hiệu ứng cổ chai và sáng lập:", opts: ["A. Quần thể phục hồi có tỉ lệ đồng hợp tử cao.", "B. Hình thành loài mới ở môi trường ban đầu.", "C. Làm tăng số lượng quần thể.", "D. Tạo quần thể đa dạng."], ans: 0, exp: "Số lượng cá thể ít -> giao phối cận huyết -> tăng đồng hợp tử, nghèo nàn vốn gen." },
+    { q: "Câu 34. Bông trồng Mĩ (2n=52) = châu Âu (2n=26) + hoang dại Mĩ (2n=26). Cơ chế:", opts: ["A. Lai xa và đa bội hóa.", "B. Con đường sinh thái.", "C. Con đường địa lí.", "D. Cách li tập tính."], ans: 0, exp: "Kết hợp bộ NST của 2 loài khác nhau." },
+    { q: "Câu 35. Nhận định SAI về cách li địa lí:", opts: ["A. Duy trì sự khác biệt vốn gene.", "B. Xảy ra với loài di cư và ít di cư.", "C. Là những trở ngại sinh học.", "D. Có thể không xuất hiện cách li sinh sản."], ans: 2, exp: "Cách li địa lí (núi, sông) không phải là cách li SINH HỌC." },
+    { q: "Câu 36. Hình thành loài khác khu vực dễ xảy ra hơn cùng khu vực vì:", opts: ["A. Dễ xảy ra do trở ngại.", "B. Trải qua dạng trung gian.", "C. Xảy ra trên đất liền.", "D. Cách li địa lí làm giảm dòng gen."], ans: 3, exp: "Trở ngại địa lí ngăn chặn dòng gen triệt để hơn, tạo điều kiện tích lũy khác biệt." },
+    { q: "Câu 37. Côn trùng sống cùng khu vực nhưng trên 2 loại cây M và N. Đây là:", opts: ["A. Lai xa.", "B. Cách li sinh thái.", "C. Cách li địa lí.", "D. Tự đa bội."], ans: 1, exp: "Sống cùng khu vực địa lí nhưng khác ổ sinh thái (loại cây)." },
+    { q: "Câu 38. Tổ hợp nối (1.Địa lí, 2.Lai xa, 3.Tiến hóa nhỏ, 4.Lớn, 5.CLTN, 6.Đặc điểm thích nghi):", opts: ["A. 1-a; 2-c; 3-b...", "B. 1-c; 2-a; 3-b; 4-e; 5-d; 6-f", "C. 1-c; 2-b; 3-a...", "D. 1-e..."], ans: 1, exp: "Địa lí (c-chậm chạp), Lai xa (a-nhanh chóng), TH nhỏ (b-biến đổi vốn gen), TH lớn (e-quy mô lớn)." },
+    { q: "Câu 39. Nối nhân tố và đặc điểm:", opts: ["A. 1-b, 2-a, 3-d...", "B. 1-b; 2-d; 3-a; 4-c; 5-e", "C. 1-d, 2-b...", "D. 1-b, 2-a..."], ans: 1, exp: "Đột biến (b-nguyên liệu sơ cấp), Giao phối K.NN (d-chỉ đổi KG ko đổi Tần số), CLTN (a-có hướng)." },
+    { q: "Câu 40. Các giai đoạn phát sinh sự sống:", opts: ["A. Hóa học -> Tiền sinh học -> Sinh học.", "B. Hóa học -> Sinh học -> Tiền.", "C. Tiền -> Hóa -> Sinh.", "D. Sinh -> Tiền -> Sinh."], ans: 0, exp: "Từ vô cơ thành hữu cơ -> Tế bào sơ khai -> Sinh giới ngày nay." },
+    { q: "Câu 41. Loài người xuất hiện ở:", opts: ["A. Kỉ Phấn trắng.", "B. Kỉ Đệ tam.", "C. Kỉ Đệ tứ.", "D. Kỉ Trias."], ans: 2, exp: "Kỉ Đệ tứ (Đại Tân sinh) là kỷ nguyên của loài người." },
+    { q: "Câu 42. Chia giai đoạn Trái Đất thành:", opts: ["A. 6 đại 12 kỉ.", "B. 5 đại 12 kỉ.", "C. 6 đại 11 kỉ.", "D. 5 đại 11 kỉ."], ans: 3, exp: "5 đại: Thái cổ, Nguyên thủy, Cổ sinh, Trung sinh, Tân sinh (gồm 11 kỉ)." },
+    { q: "Câu 43. Trình tự tiến hóa chi Homo:", opts: ["A. H. habilis -> H. erectus -> H. neanderthalensis -> H. sapiens.", "B. H. habilis -> H. neanderthal -> H. erectus -> H. sapiens.", "C. H. erectus -> H. habilis...", "D. H. habilis -> H. erectus -> Neander -> Sapiens."], ans: 0, exp: "Người khéo léo -> Đứng thẳng -> Neanderthal -> Hiện đại." },
+    { q: "Câu 44. Bò sát cổ phát sinh -> phát triển -> tuyệt diệt ở:", opts: ["A. Than đá -> Jura -> Đệ tam.", "B. Pecmi -> Jura -> Đệ tam.", "C. Pecmi -> Jura -> Đệ tứ.", "D. Than đá -> Jura -> Phấn trắng."], ans: 3, exp: "Tuyệt diệt hàng loạt bò sát khổng lồ ở kỉ Phấn trắng do thiên thạch." },
+    { q: "Câu 45. Ghép đúng kỉ và sự kiện:", opts: ["A. 1-f, 2-e, 3-i, 4-b, 5-c, 6-d, 7-g, 8-a, 9-h.", "B. 1-f, 2-e, 3-c...", "C. 1-e, 2-f...", "D. 1-e, 2-f..."], ans: 0, exp: "Cacbon (i-phát sinh bò sát), Trias (c-phát sinh chim thú), Jura (d-bò sát ngự trị), Đệ tứ (h-loài người)." },
+    { q: "Câu 46. (Dựa vào Hình 2 trong đề) Hai loài bò sát có quan hệ tiến hóa gần nhất là:", opts: ["A. Thằn lằn giám sát và kỳ nhông.", "B. Thằn lằn giám sát và thạch sùng.", "C. Thằn lằn thủy tinh và rắn.", "D. Rắn và thằn lằn giám sát."], ans: 0, exp: "Dựa vào nút phân nhánh, thằn lằn giám sát và kỳ nhông tách ra từ một tổ tiên chung gần nhất." },
+    { q: "Câu 47. (Dựa vào Hình 3 trong đề) Phát biểu SAI là:", opts: ["A. Người và tinh tinh họ hàng gần nhất.", "B. Điểm U cho thấy chung tổ tiên.", "C. Loài tại đỉnh U chắc chắn phải là loài Người.", "D. Loài người tiến hóa trực tiếp từ U."], ans: 2, exp: "U là ĐIỂM PHÂN NHÁNH (Tổ tiên chung của người và tinh tinh), không phải là loài Người hiện đại." },
+    { q: "Câu 48. Hạt trần và bò sát khổng lồ hưng thịnh ở đại Trung sinh do:", opts: ["A. Hạt trần là thức ăn lưỡng cư.", "B. Biển tiến sâu đất liền.", "C. Khí hậu ấm áp, khô hạn.", "D. Sự phát sinh chim, thú."], ans: 2, exp: "Đại Trung sinh có khí hậu khô ấm, thích hợp cho thực vật hạt trần và bò sát phát triển mạnh." },
+    { q: "Câu 49. Hiện nay đại phân tử hữu cơ có tiến hóa thành tế bào sơ khai không?", opts: ["A. Không, vì không đủ phân tử hữu cơ.", "B. Không, vì chất hữu cơ sẽ bị vi sinh vật phân hủy hoặc bị ôxi hóa.", "C. Không, vì thiếu năng lượng.", "D. Không, vì thiếu chất vô cơ."], ans: 1, exp: "Khí quyển hiện nay có nhiều Oxy tự do và vi sinh vật, chúng sẽ phân hủy ngay lập tức các chất hữu cơ mới tạo thành." }
+];
+
+const part2Data = [
+    { q: "Câu 1. Bằng chứng tiến hóa:", stmts: [{ t: "a) Cơ quan thực hiện chức năng khác nhau, chung nguồn gốc là tương đồng.", a: true, e: "Đúng định nghĩa cơ quan tương đồng." }, { t: "b) Cơ quan thoái hóa phản ánh tiến hóa đồng quy.", a: false, e: "Sai. Thoái hóa phản ánh tiến hóa phân li." }, { t: "c) Họ hàng càng gần thì trình tự amino acid càng khác xa nhau.", a: false, e: "Sai. Họ hàng càng gần thì trình tự càng GIỐNG nhau." }, { t: "d) Vi khuẩn, động thực vật đều cấu tạo từ tế bào.", a: true, e: "Đúng. Đây là bằng chứng tế bào học." }] },
+    { q: "Câu 2. Bằng chứng hóa thạch:", stmts: [{ t: "a) Hóa thạch là di tích sinh vật sống để lại trong lớp địa chất.", a: true, e: "Đúng định nghĩa." }, { t: "b) Xác sâu bọ trong hổ phách, voi mamut trong băng là hóa thạch.", a: true, e: "Đúng, đây là các dạng hóa thạch nguyên vẹn." }, { t: "c) Hóa thạch là bằng chứng gián tiếp.", a: false, e: "Sai. Hóa thạch là bằng chứng TRỰC TIẾP." }, { t: "d) Hầu hết hóa thạch giữ nguyên hình dạng, màu sắc.", a: false, e: "Sai. Rất hiếm khi giữ nguyên màu sắc." }] },
+    { q: "Câu 3. Học thuyết Darwin:", stmts: [{ t: "a) Darwin đề xuất thuyết tiến hóa bằng CLTN.", a: true, e: "Đúng." }, { t: "b) Biến dị cá thể là sai khác giữa các cá thể trong loài qua sinh sản.", a: true, e: "Đúng định nghĩa của Darwin." }, { t: "c) Khởi hành năm 1832.", a: false, e: "Sai. Tàu Beagle khởi hành năm 1831." }, { t: "d) Nguyên liệu chủ yếu là đột biến cấu trúc NST.", a: false, e: "Sai. Thời Darwin chưa có khái niệm NST." }] },
+    { q: "Câu 4. Biến dị cá thể theo Darwin:", stmts: [{ t: "a) Xuất hiện ngẫu nhiên trong sinh sản.", a: true, e: "Đúng." }, { t: "b) Xuất hiện đồng loạt theo một hướng xác định.", a: false, e: "Sai. Đây là đặc điểm của biến dị xác định." }, { t: "c) Không di truyền được.", a: false, e: "Sai. Biến dị cá thể là di truyền được." }, { t: "d) Không xác định được chiều hướng.", a: true, e: "Đúng. Mang tính chất cá biệt, ngẫu nhiên." }] },
+    { q: "Câu 5. Hình thành loài mới:", stmts: [{ t: "a) Cùng khu vực, khác ổ sinh thái lâu dần dẫn đến cách li sinh sản.", a: true, e: "Đúng. (Cách li sinh thái)." }, { t: "b) Quần thể thích nghi luôn dẫn đến hình thành loài mới.", a: false, e: "Sai. Hình thành quần thể thích nghi chưa chắc thành loài mới." }, { t: "c) Lai xa kèm đa bội hóa góp phần hình thành loài mới cùng khu vực địa lí.", a: true, e: "Đúng. Xảy ra chủ yếu ở thực vật." }, { t: "d) Cách li tập tính, sinh thái có thể dẫn đến loài mới.", a: true, e: "Đúng." }] },
+    { q: "Câu 6. Chim sẻ trên đảo:", stmts: [{ t: "a) Là ví dụ hình thành loài khác khu (địa lí).", a: true, e: "Đúng, bị bão cuốn ra đảo cách xa đất liền." }, { t: "b) Yếu tố chính không giao phối là do tập tính làm tổ mới.", a: true, e: "Đúng, cách li tập tính đã được hình thành." }, { t: "c) Tái nhập đất liền chúng sẽ không ăn cùng loài thực vật.", a: false, e: "Sai. Không có dữ liệu chắc chắn về thức ăn." }, { t: "d) Tái nhập vẫn không giao phối để sinh con.", a: true, e: "Đúng, vì đã thành 2 loài khác nhau." }] },
+    { q: "Câu 7. Tiến hóa nhỏ:", stmts: [{ t: "a) Kết thúc bằng xuất hiện loài mới (cách li sinh sản).", a: true, e: "Đúng định nghĩa." }, { t: "b) Đơn vị tiến hóa là cá thể.", a: false, e: "Sai. Đơn vị của tiến hóa nhỏ là quần thể." }, { t: "c) Là quá trình hình thành loài mới.", a: true, e: "Đúng bản chất." }, { t: "d) Diễn ra không gian rộng, thời gian dài, không thể làm thực nghiệm.", a: false, e: "Sai. Không gian hẹp, thời gian ngắn, CÓ THỂ làm thực nghiệm." }] },
+    { q: "Câu 8. Chọn lọc tự nhiên:", stmts: [{ t: "a) Phân hóa sống sót & sinh sản của các cá thể với kiểu gen khác nhau.", a: true, e: "Đúng theo tiến hóa tổng hợp hiện đại." }, { t: "b) Tác động trực tiếp lên kiểu gen.", a: false, e: "Sai. Tác động trực tiếp lên Kiểu Hình, gián tiếp lên Kiểu Gen." }, { t: "c) Làm biến đổi không theo hướng xác định.", a: false, e: "Sai. CLTN là nhân tố DUY NHẤT có hướng." }, { t: "d) Đóng vai trò sàng lọc mà không tạo ra kiểu gen thích nghi.", a: true, e: "Đúng, đột biến và giao phối mới tạo kiểu gen." }] },
+    { q: "Câu 9. Sự sống trên Trái Đất:", stmts: [{ t: "a) Tiến hóa hóa học -> tiền sinh học -> sinh học.", a: true, e: "Đúng." }, { t: "b) Khí quyển nguyên thủy chưa có khí Oxygen.", a: true, e: "Đúng. Đó là môi trường khử." }, { t: "c) Quá trình thủy phân tạo đại phân tử.", a: false, e: "Sai. Phải là quá trình trùng hợp (polymer hóa)." }, { t: "d) Mầm mống xuất hiện ngay khi Trái đất hình thành.", a: false, e: "Sai. Phải mất hàng tỉ năm tiến hóa hóa học." }] },
+    { q: "Câu 10. Đại địa chất:", stmts: [{ t: "a) Thực vật có hạt phát sinh ở kỉ Carbon (Than đá).", a: true, e: "Đúng." }, { t: "b) Chim, thú phát sinh ở kỉ Tam Điệp của Đại Tân sinh.", a: false, e: "Sai. Kỉ Tam điệp (Trias) thuộc Đại Trung Sinh." }, { t: "c) Linh trưởng phát sinh kỉ Đệ tam (Đại Tân sinh).", a: true, e: "Đúng." }, { t: "d) Bò sát cổ ngự trị ở Kỉ Jura.", a: true, e: "Đúng (Công viên kỉ Jura)." }] },
+    { q: "Câu 11. Đặc điểm kỉ Đệ Tứ:", stmts: [{ t: "a) Loài người hiện đại xuất hiện.", a: true, e: "Đúng." }, { t: "b) Thực vật hạt kín xuất hiện, thú tiến hóa.", a: false, e: "Sai. Hạt kín xuất hiện từ kỉ Phấn trắng." }, { t: "c) Phồn thịnh hạt kín, sâu bọ, chim thú.", a: false, e: "Sai. Phồn thịnh ở kỉ Đệ Tam." }, { t: "d) Phân hóa cá xương, phát sinh lưỡng cư.", a: false, e: "Sai. Sự kiện này ở kỉ Devon." }] }
+];
+
+const part3Data = [
+    { q: "Câu 1. Có bao nhiêu bằng chứng TRỰC TIẾP trong 6 loại bằng chứng đã cho?", ans: "1", exp: "Chỉ có 1 bằng chứng trực tiếp là (3) Hóa thạch." },
+    { q: "Câu 2. Có bao nhiêu bằng chứng TẾ BÀO HỌC trong 6 ý đã cho?", ans: "4", exp: "Các ý tế bào học: 1, 2, 5, 6. Các ý 3, 4 là sinh học phân tử." },
+    { q: "Câu 3. Darwin quan sát và kết luận bao nhiêu hiện tượng đúng?", ans: "5", exp: "Gồm 1, 3, 4, 5, 6. Ý 2 sai vì con cái luôn có biến dị cá thể khác mẹ." },
+    { q: "Câu 4. Có bao nhiêu quan niệm ĐÚNG (trong 8 ý về học thuyết Darwin)?", ans: "6", exp: "Ý đúng: 1, 3, 4, 6, 7, 8. Ý 2 sai (BD xác định là biến dị đồng loạt). Ý 5 sai." },
+    { q: "Câu 5. Trình tự tiến hóa lông chim sặc sỡ (1-Thu hút, 2-Sẵn đột biến, 3-Nhân allele, 4-Phổ biến). Viết liền:", ans: "2134", exp: "2. Sẵn đột biến -> 1. Thu hút bạn tình -> 3. Phát tán (nhân lên) -> 4. Phổ biến." },
+    { q: "Câu 6. Có bao nhiêu nhân tố tiến hóa trong các nhân tố đã cho?", ans: "5", exp: "Gồm: CLTN, Đột biến, Dòng gen, Giao phối ko ngẫu nhiên, Phiêu bạt DT." },
+    { q: "Câu 7. Có bao nhiêu nhận định ĐÚNG về tiến hóa nhỏ trong 5 ý?", ans: "4", exp: "Các ý 1, 2, 4, 5 đúng. Ý 3 sai vì TH nhỏ kết thúc bằng hình thành loài." },
+    { q: "Câu 8. Đột biến gen gây hại nhưng vẫn có vai trò quan trọng (Bao nhiêu giải thích đúng)?", ans: "3", exp: "Gồm (2), (3), (4). Đột biến lặn là nguồn dự trữ." },
+    { q: "Câu 9. Sinh giới tiến hóa theo bao nhiêu chiều hướng đúng?", ans: "3", exp: "Gồm 1, 2, 4. Ý 3 sai vì chiều hướng là từ DƯỚI NƯỚC LÊN CẠN." },
+    { q: "Câu 10. Có bao nhiêu đặc điểm chỉ ở người hiện đại?", ans: "2", exp: "Chỉ có 1-Văn hóa tôn giáo và 5-Có lồi cằm." }
+];
+
+// ==================== RENDERING ENGINE ====================
+
+// Render Part 1
+const p1Container = document.getElementById('part1-container');
+part1Data.forEach((item, qIndex) => {
+    let card = document.createElement('div'); card.className = 'glass-card';
+    card.style.animationDelay = `${qIndex * 0.05}s`;
+    let html = `<div class="q-text">${item.q}</div>`;
+    item.opts.forEach((opt, oIndex) => {
+        html += `<button class="opt-btn" onclick="checkP1(this, ${qIndex}, ${oIndex})">${opt}</button>`;
+    });
+    html += `<div class="explanation" id="exp1-${qIndex}"><b>Giải thích:</b> ${item.exp}</div>`;
+    card.innerHTML = html; p1Container.appendChild(card);
+});
+
+function checkP1(btn, qIndex, oIndex) {
+    let card = btn.parentElement;
+    let buttons = card.querySelectorAll('.opt-btn');
+    let correctIdx = part1Data[qIndex].ans;
+    
+    buttons.forEach(b => { b.disabled = true; b.style.cursor = 'default'; });
+    
+    if(oIndex === correctIdx) {
+        btn.classList.add('correct');
+    } else {
+        btn.classList.add('incorrect');
+        buttons[correctIdx].classList.add('correct');
+    }
+    document.getElementById(`exp1-${qIndex}`).style.display = 'block';
+}
+
+// Render Part 2
+const p2Container = document.getElementById('part2-container');
+part2Data.forEach((item, qIndex) => {
+    let card = document.createElement('div'); card.className = 'glass-card';
+    let html = `<div class="q-text">${item.q}</div>`;
+    
+    item.stmts.forEach((stmt, sIndex) => {
+        html += `
+        <div class="tf-row">
+            <div class="tf-text">${stmt.t}</div>
+            <div class="tf-actions">
+                <button class="tf-btn" onclick="checkP2(this, ${qIndex}, ${sIndex}, true)">ĐÚNG</button>
+                <button class="tf-btn" onclick="checkP2(this, ${qIndex}, ${sIndex}, false)">SAI</button>
+            </div>
+        </div>
+        <div class="explanation" id="exp2-${qIndex}-${sIndex}">${stmt.e}</div>
+        `;
+    });
+    card.innerHTML = html; p2Container.appendChild(card);
+});
+
+function checkP2(btn, qIndex, sIndex, userChoice) {
+    let row = btn.closest('.tf-row');
+    let buttons = row.querySelectorAll('.tf-btn');
+    let isCorrect = part2Data[qIndex].stmts[sIndex].a;
+
+    buttons.forEach(b => { b.disabled = true; b.style.cursor = 'default'; });
+
+    if(userChoice === isCorrect) {
+        btn.classList.add('correct');
+    } else {
+        btn.classList.add('incorrect');
+        let correctBtnText = isCorrect ? "ĐÚNG" : "SAI";
+        buttons.forEach(b => { if(b.innerText === correctBtnText) b.classList.add('correct'); });
+    }
+    document.getElementById(`exp2-${qIndex}-${sIndex}`).style.display = 'block';
+}
+
+// Render Part 3
+const p3Container = document.getElementById('part3-container');
+part3Data.forEach((item, qIndex) => {
+    let card = document.createElement('div'); card.className = 'glass-card';
+    card.innerHTML = `
+        <div class="q-text">${item.q}</div>
+        <div class="sa-wrap">
+            <input type="text" class="sa-input" id="input3-${qIndex}" placeholder="Nhập đáp án (VD: 1, 2134...)">
+            <button class="sa-submit" onclick="checkP3(${qIndex}, this)">Kiểm Tra</button>
+        </div>
+        <div class="explanation" id="exp3-${qIndex}"><b>Giải thích:</b> ${item.exp}</div>
+    `;
+    p3Container.appendChild(card);
+});
+
+function checkP3(qIndex, btn) {
+    let input = document.getElementById(`input3-${qIndex}`);
+    let userAns = input.value.trim().toLowerCase();
+    let correctAns = part3Data[qIndex].ans.toLowerCase();
+
+    input.disabled = true; btn.disabled = true;
+    
+    if(userAns === correctAns) {
+        input.classList.add('correct');
+        btn.classList.add('correct');
+        btn.innerText = "Chuẩn!";
+    } else {
+        input.classList.add('incorrect');
+        btn.classList.add('incorrect');
+        btn.innerText = "Sai!";
+        input.value = `Sai! Đáp án: ${part3Data[qIndex].ans}`;
+    }
+    document.getElementById(`exp3-${qIndex}`).style.display = 'block';
+}
+</script>
+
+</body>
+</html>
